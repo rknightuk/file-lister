@@ -6,12 +6,50 @@ $url             = 'http://rbbl.ws/shr/';
 
 // Allowed file types
 $imageTypes      = array('jpg','png','gif');
-$other           = array('zip,pdf,docx,ppt,txt,html');
+$other           = array('zip,pdf,txt,html');
 
-// Icon colours
-$colourPrimary   = '#ff4579';
-$colourSecondary = '#ff699e';
+// Icon colours (default)
+$colourPrimary   = '#48b8f7';
+$colourSecondary = '#6bd0fc';
 
+// Type-specific icon colours
+$typeColours = array(
+	array(
+		'ext' => 'jpg',
+		'primary' => '#ed5858',
+		'secondary' => '#f47878'
+	),
+	array(
+		'ext' => 'png',
+		'primary' => '#ff4579',
+		'secondary' => '#ff699e'
+	),
+	array(
+		'ext' => 'gif',
+		'primary' => '#c5d873',
+		'secondary' => '#d4e089'
+	),
+	array(
+		'ext' => 'pdf',
+		'primary' => '#ffc359',
+		'secondary' => '#ffce88'
+	),
+	array(
+		'ext' => 'zip',
+		'primary' => '#f7984a',
+		'secondary' => '#fcab75'
+	),
+	array(
+		'ext' => 'txt',
+		'primary' => '#998c7a',
+		'secondary' => '#a3978d'
+	),
+	array(
+		'ext' => 'html',
+		'primary' => '#c5d873',
+		'secondary' => '#d4e089'
+	),
+);
 ?>
 
 <!DOCTYPE HTML>
@@ -49,9 +87,8 @@ $colourSecondary = '#ff699e';
 			.file {
 				width: 100%;
 				overflow: auto;
+				border-bottom: 1px solid #eceef1;
 			}
-
-			.file:nth-child(even) { background-color: #FAFAFA; }
 
 			.file:hover {
 				background-color: #eceef1;
@@ -81,10 +118,10 @@ $colourSecondary = '#ff699e';
 				text-align: center;
 				width: 55%;
 				position: relative;
-				background: <?php echo $colourPrimary; ?>;
 				overflow: hidden;
 				min-width: 40px;
 				color: white;
+				background: <?php echo $colourPrimary; ?>;
 			}
 
 			.file-icon:before {
@@ -97,8 +134,6 @@ $colourSecondary = '#ff699e';
 			  border-color: <?php echo $colourSecondary; ?> #fff;
 			}
 
-			.file:nth-child(even) .file-icon:before { border-color: <?php echo $colourSecondary; ?> #FAFAFA; }
-
 			.file:hover .file-icon:before { border-color: <?php echo $colourSecondary; ?> #eceef1; }
 
 			.featherlight-content img {
@@ -109,6 +144,16 @@ $colourSecondary = '#ff699e';
 			@media screen and (max-width: 600px) {
 				.file .date { display: none; }
 			}
+
+			<?php foreach ($typeColours as $colours) {
+					echo ' ';
+					echo '.file-icon.'.$colours['ext'].' { background: '.$colours['primary'].'; }';
+					echo ' ';
+					echo '.file-icon.'.$colours['ext'].':before { border-color: '.$colours['secondary'].' #fff; }';
+					echo ' ';
+					echo '.file:hover .file-icon.'.$colours['ext'].':before { border-color: '.$colours['secondary'].' #eceef1; }';
+				}
+			?>
 		</style>
 		
 	</head>
